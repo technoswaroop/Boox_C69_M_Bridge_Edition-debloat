@@ -276,4 +276,6 @@ Releases are built with [GoReleaser](https://goreleaser.com) when a `v*` tag is 
 
 MIT. Not affiliated with Onyx. Use at your own risk.
 
-Created by [tekki](https://www.tekki.studio). If it saved you some time, you can [buy me a coffee](https://buymeacoffee.com/tekki.studio).
+C69 M Bridge edition by [technoswaroop](https://github.com/technoswaroop): Bridge support and one-click sleep picture.
+
+Inspired by and based on [Boox Debloat](https://github.com/RodrickRK/boox-debloat), created by [tekki](https://www.tekki.studio). If the original saved you some time, you can [buy them a coffee](https://buymeacoffee.com/tekki.studio).
