@@ -197,7 +197,7 @@ func (s *Server) handleStatus(w http.ResponseWriter, r *http.Request) {
 	resp.Model = s.prop(dev.Serial, "ro.product.model")
 	resp.Firmware = s.prop(dev.Serial, "ro.build.display.id")
 	resp.Android = s.prop(dev.Serial, "ro.build.version.release")
-	resp.Supported = resp.Model == s.cat.Model
+	resp.Supported = s.cat.supports(resp.Model)
 	s.noteConn(resp)
 	writeJSON(w, http.StatusOK, resp)
 }
@@ -239,7 +239,7 @@ func (s *Server) readyDevice(w http.ResponseWriter, write bool) (DeviceEntry, bo
 		return dev, false
 	}
 	if write {
-		if model := s.prop(dev.Serial, "ro.product.model"); model != s.cat.Model {
+		if model := s.prop(dev.Serial, "ro.product.model"); !s.cat.supports(model) {
 			writeErr(w, http.StatusConflict, fmt.Sprintf("This tool only changes the %s. This device is %q.", s.cat.Model, model))
 			return dev, false
 		}

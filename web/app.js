@@ -200,7 +200,7 @@ function renderDevice(status) {
   }
   show("restartBox", true);
   show("views", true);
-  $("deviceName").textContent = status.model === "C69_M_STAR" ? "C69 M Star" : status.model || "Android device";
+  $("deviceName").textContent = ({ C69_M_STAR: "C69 M Star", C69_M_Bridge: "C69 M Bridge" })[status.model] || status.model || "Android device";
   const fw = (status.firmware.match(/(\d+\.\d+\.\d+)/) || [])[1] || status.firmware;
   const meta = $("deviceMeta");
   meta.textContent = `Firmware ${fw}, Android ${status.android}`;
@@ -278,7 +278,7 @@ async function refreshStatus() {
   show("unsupported", !status.supported);
   if (!status.supported) {
     $("unsupported").textContent =
-      `This tool is made for the C69 M Star. This device reports "${status.model}", so changes are turned off.`;
+      `This tool is made for the C69 M Star and C69 M Bridge. This device reports "${status.model}", so changes are turned off.`;
   }
   const fresh = !was || was.state !== "device" || was.serial !== status.serial;
   if (fresh || !state.apps) await loadApps();
@@ -1041,7 +1041,7 @@ $("pictureForm").addEventListener("submit", async (e) => {
     const res = await api("picture", { method: "POST", body: form });
     flash();
     const done = $("pictureDone");
-    done.textContent = `Sent as ${res.name}. On the tablet: open Storage, then Pictures, long-press the picture and set it as the screensaver.`;
+    done.textContent = `Sent as ${res.name}. On the tablet: open Storage, then Image (or Pictures), long-press the picture and set it as the screensaver.`;
     done.hidden = false;
   } catch (err) {
     setPictureInfo(err.message, true);

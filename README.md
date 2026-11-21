@@ -4,6 +4,8 @@
 
 A small app for the **Onyx Boox C69 M Star** (Star Education edition). It removes the extra system apps, lets you bring any of them back with one switch, and keeps the sleep screen working.
 
+> **This fork also supports the C69 M Bridge** (Bridge edition, model `C69_M_Bridge`, firmware 3.2.2, Android 11). It has the same screen (758 × 1024) and the same system apps as the M Star, plus a few extras this fork can remove, such as `com.bridge.pupilregistrar`. Download the Windows build from the latest **Test** run under Actions (artifact `boox-debloat-windows`).
+
 It also installs apps from APK files, suggests e-ink friendly apps, and lets you browse, copy and delete files on the tablet.
 
 It runs on your computer, opens in your browser, and talks to the tablet over USB.
