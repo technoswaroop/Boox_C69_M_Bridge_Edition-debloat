@@ -2,7 +2,7 @@ name: Test
 
 on:
   push:
-    branches: [main]
+    branches: [main, bridge-support]
   pull_request:
 
 jobs:
@@ -19,3 +19,17 @@ jobs:
           go-version: stable
       - run: go vet ./...
       - run: go test ./...
+
+  windows-exe:
+    needs: test
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+      - run: go build -o boox-debloat.exe .
+      - uses: actions/upload-artifact@v4
+        with:
+          name: boox-debloat-windows
+          path: boox-debloat.exe

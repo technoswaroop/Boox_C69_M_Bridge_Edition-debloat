@@ -1,5 +1,6 @@
 {
   "model": "C69_M_STAR",
+  "models": ["C69_M_STAR", "C69_M_Bridge"],
   "remove": [
     { "id": "com.android.bips", "name": "Built-in print service", "why": "Printing isn't used on this tablet" },
     { "id": "com.android.calllogbackup", "name": "Call log backup", "why": "The tablet has no phone calls" },
@@ -20,7 +21,19 @@
     { "id": "com.qualcomm.qti.sva", "name": "Voice wake-up (Qualcomm)", "why": "Voice activation isn't used" },
     { "id": "com.qualcomm.qti.uimGbaApp", "name": "SIM authentication (Qualcomm)", "why": "Needs a SIM card" },
     { "id": "com.qualcomm.qti.xrvd.service", "name": "XR video service (Qualcomm)", "why": "For VR headsets, not e-ink tablets" },
-    { "id": "vendor.qti.iwlan", "name": "Wi-Fi calling (Qualcomm)", "why": "Needs a mobile network" }
+    { "id": "vendor.qti.iwlan", "name": "Wi-Fi calling (Qualcomm)", "why": "Needs a mobile network" },
+    { "id": "com.bridge.pupilregistrar", "name": "Bridge pupil registration", "why": "School sign-up app on the Bridge edition, not needed at home" },
+    { "id": "com.android.protips", "name": "Home screen tips", "why": "Old Android tips widget" },
+    { "id": "com.android.dreams.basic", "name": "Basic screensaver", "why": "Android colour screensaver; Boox uses its own sleep screen" },
+    { "id": "com.android.dreams.phototable", "name": "Photo screensaver", "why": "Android photo screensaver; Boox uses its own sleep screen" },
+    { "id": "com.android.bookmarkprovider", "name": "Bookmark store", "why": "Only for the old Android browser" },
+    { "id": "com.android.htmlviewer", "name": "HTML viewer", "why": "Shows legal text pages; Chrome does this" },
+    { "id": "com.android.emergency", "name": "Emergency information", "why": "Phone feature for calling emergency contacts" },
+    { "id": "com.android.bluetoothmidiservice", "name": "Bluetooth music keyboards", "why": "For MIDI music keyboards" },
+    { "id": "com.android.apps.tag", "name": "NFC tag reader", "why": "This tablet has no NFC chip" },
+    { "id": "com.android.quicksearchbox", "name": "Old search box", "why": "Old Android search widget" },
+    { "id": "com.android.companiondevicemanager", "name": "Watch pairing", "why": "Pairs smartwatches and bands" },
+    { "id": "com.qualcomm.wfd.service", "name": "Screen casting (Qualcomm)", "why": "Casts the screen to a TV" }
   ],
   "disable": [
     { "id": "com.android.nfc", "name": "NFC", "why": "Not used on this tablet; turned off rather than removed" }

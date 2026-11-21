@@ -36,6 +36,20 @@ func TestCatalogHasNoOverlaps(t *testing.T) {
 	}
 }
 
+func TestSupportsBridge(t *testing.T) {
+	c := testCatalog(t)
+	for _, m := range []string{"C69_M_STAR", "C69_M_Bridge"} {
+		if !c.supports(m) {
+			t.Errorf("%s should be supported", m)
+		}
+	}
+	for _, m := range []string{"", "C69_M_bridge", "Note Air"} {
+		if c.supports(m) {
+			t.Errorf("%q should not be supported", m)
+		}
+	}
+}
+
 func TestKsyncIsProtected(t *testing.T) {
 	if g := testCatalog(t).group("com.onyx.android.ksync"); g != groupProtected {
 		t.Fatalf("ksync must be protected, got %q", g)

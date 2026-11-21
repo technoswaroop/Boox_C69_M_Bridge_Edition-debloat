@@ -200,7 +200,7 @@ function renderDevice(status) {
   }
   show("restartBox", true);
   show("views", true);
-  $("deviceName").textContent = status.model === "C69_M_STAR" ? "C69 M Star" : status.model || "Android device";
+  $("deviceName").textContent = ({ C69_M_STAR: "C69 M Star", C69_M_Bridge: "C69 M Bridge" })[status.model] || status.model || "Android device";
   const fw = (status.firmware.match(/(\d+\.\d+\.\d+)/) || [])[1] || status.firmware;
   const meta = $("deviceMeta");
   meta.textContent = `Firmware ${fw}, Android ${status.android}`;
@@ -278,7 +278,7 @@ async function refreshStatus() {
   show("unsupported", !status.supported);
   if (!status.supported) {
     $("unsupported").textContent =
-      `This tool is made for the C69 M Star. This device reports "${status.model}", so changes are turned off.`;
+      `This tool is made for the C69 M Star and C69 M Bridge. This device reports "${status.model}", so changes are turned off.`;
   }
   const fresh = !was || was.state !== "device" || was.serial !== status.serial;
   if (fresh || !state.apps) await loadApps();
@@ -1033,22 +1033,31 @@ $("pictureForm").addEventListener("submit", async (e) => {
   const form = new FormData();
   form.append("picture", state.picture);
   form.append("fit", $("fit").checked ? "1" : "0");
+  const apply = $("applySleep").checked;
+  form.append("apply", apply ? "1" : "0");
   const btn = $("sendPicture");
   btn.disabled = true;
-  btn.textContent = "Sending…";
+  btn.textContent = apply ? "Setting… (about 30 s)" : "Sending…";
   state.busy = true;
   try {
     const res = await api("picture", { method: "POST", body: form });
     flash();
     const done = $("pictureDone");
-    done.textContent = `Sent as ${res.name}. On the tablet: open Storage, then Pictures, long-press the picture and set it as the screensaver.`;
+    const manual = "On the tablet: open Storage, then Image (or Pictures), long-press the picture, tap Set Screensaver, then Set as screensaver.";
+    if (apply && res.applied) {
+      done.textContent = `Done. ${res.name} is now the sleep picture. Press the power button to see it.`;
+    } else if (apply) {
+      done.textContent = `Sent as ${res.name}, but setting it didn't finish: ${res.applyError || "unknown error"}. ${manual}`;
+    } else {
+      done.textContent = `Sent as ${res.name}. ${manual}`;
+    }
     done.hidden = false;
   } catch (err) {
     setPictureInfo(err.message, true);
   } finally {
     state.busy = false;
     btn.disabled = false;
-    btn.textContent = "Send to tablet";
+    btn.textContent = "Set sleep picture";
   }
 });
 

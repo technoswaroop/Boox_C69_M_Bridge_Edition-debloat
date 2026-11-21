@@ -197,7 +197,7 @@ func (s *Server) handleStatus(w http.ResponseWriter, r *http.Request) {
 	resp.Model = s.prop(dev.Serial, "ro.product.model")
 	resp.Firmware = s.prop(dev.Serial, "ro.build.display.id")
 	resp.Android = s.prop(dev.Serial, "ro.build.version.release")
-	resp.Supported = resp.Model == s.cat.Model
+	resp.Supported = s.cat.supports(resp.Model)
 	s.noteConn(resp)
 	writeJSON(w, http.StatusOK, resp)
 }
@@ -239,7 +239,7 @@ func (s *Server) readyDevice(w http.ResponseWriter, write bool) (DeviceEntry, bo
 		return dev, false
 	}
 	if write {
-		if model := s.prop(dev.Serial, "ro.product.model"); model != s.cat.Model {
+		if model := s.prop(dev.Serial, "ro.product.model"); !s.cat.supports(model) {
 			writeErr(w, http.StatusConflict, fmt.Sprintf("This tool only changes the %s. This device is %q.", s.cat.Model, model))
 			return dev, false
 		}
@@ -531,10 +531,27 @@ func (s *Server) handlePicture(w http.ResponseWriter, r *http.Request) {
 	}
 	// Index it, or the sleep screen won't see it.
 	s.be.Shell(dev.Serial, "am", "broadcast", "-a", "android.intent.action.MEDIA_SCANNER_SCAN_FILE", "-d", "file://"+remote)
+	s.log.add("Sleep picture sent: %s", name)
 	b := img.Bounds()
-	writeJSON(w, http.StatusOK, map[string]any{
+	resp := map[string]any{
 		"name": name, "path": remote, "width": b.Dx(), "height": b.Dy(), "bytes": len(data),
-	})
+	}
+	if r.FormValue("apply") == "1" {
+		if s.demo {
+			resp["applied"] = true
+		} else {
+			time.Sleep(2 * time.Second) // let the media index pick it up
+			err := sleepSetter{b: s.be, serial: dev.Serial, wait: 1500 * time.Millisecond}.set(name)
+			resp["applied"] = err == nil
+			if err != nil {
+				resp["applyError"] = err.Error()
+				s.log.add("Setting the sleep picture failed: %v", err)
+			} else {
+				s.log.add("Sleep picture set: %s", name)
+			}
+		}
+	}
+	writeJSON(w, http.StatusOK, resp)
 }
 
 // ---------------------------------------------------------------------------

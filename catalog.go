@@ -18,8 +18,9 @@ type App struct {
 
 // Catalog holds the app lists from apps.json.
 type Catalog struct {
-	Model     string `json:"model"`
-	Remove    []App  `json:"remove"`
+	Model     string   `json:"model"`
+	Models    []string `json:"models"` // every model the tool may change
+	Remove    []App    `json:"remove"`
 	Disable   []App  `json:"disable"`
 	Protected []App  `json:"protected"`
 }
@@ -36,6 +37,22 @@ func loadCatalog() (*Catalog, error) {
 		return nil, fmt.Errorf("reading apps.json: %w", err)
 	}
 	return &c, nil
+}
+
+// supports reports whether the tool may change this model.
+func (c *Catalog) supports(model string) bool {
+	if model == "" {
+		return false
+	}
+	if model == c.Model {
+		return true
+	}
+	for _, m := range c.Models {
+		if m == model {
+			return true
+		}
+	}
+	return false
 }
 
 // group returns which list an app is in, or "" if the tool doesn't know it.
