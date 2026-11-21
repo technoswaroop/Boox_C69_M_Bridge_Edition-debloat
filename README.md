@@ -2,9 +2,9 @@
 
 # Boox Debloat
 
-A small app for the **Onyx Boox C69 M Star** (Star Education edition). It removes the extra system apps, lets you bring any of them back with one switch, and keeps the sleep screen working.
+A small app for the **Onyx Boox C69 M Bridge** (Bridge edition, model `C69_M_Bridge`, firmware 3.2.2, Android 11). It removes the extra system apps, lets you bring any of them back with one switch, and sets your sleep picture in one click.
 
-> **This fork also supports the C69 M Bridge** (Bridge edition, model `C69_M_Bridge`, firmware 3.2.2, Android 11). It has the same screen (758 × 1024) and the same system apps as the M Star, plus a few extras this fork can remove, such as `com.bridge.pupilregistrar`. Download the Windows build from the latest **Test** run under Actions (artifact `boox-debloat-windows`).
+> Download the Windows build from the latest **Test** run under Actions (artifact `boox-debloat-windows`).
 
 It also installs apps from APK files, suggests e-ink friendly apps, and lets you browse, copy and delete files on the tablet.
 
@@ -132,13 +132,13 @@ Set it from the **file browser**. The hidden Wallpaper Settings page crashes on 
 
 The left panel shows the state of Google Play:
 
-- **Play Store missing.** The C69 M Star's Star Education firmware comes with Google Play services but no Play Store. Download Google's Play Store APK (the **nodpi** version), for example from [APKMirror](https://www.apkmirror.com/apk/google-inc/google-play-store/), and choose it with **Install Play Store**. The app reads the file's manifest and signing certificate and only installs it if it's `com.android.vending` and signed by Google: either with Google's Play Store key (SHA-1 `38:91:8A:45:3D:07:19:93:54:F8:B1:9A:F0:5E:C6:56:2C:ED:57:88`) or with the same key as the Google apps that came on your tablet. Anything else is refused. Choose a plain `.apk`, not an XAPK bundle.
+- **Play Store missing.** If your firmware comes with Google Play services but no Play Store, add it here. Download Google's Play Store APK (the **nodpi** version), for example from [APKMirror](https://www.apkmirror.com/apk/google-inc/google-play-store/), and choose it with **Install Play Store**. The app reads the file's manifest and signing certificate and only installs it if it's `com.android.vending` and signed by Google: either with Google's Play Store key (SHA-1 `38:91:8A:45:3D:07:19:93:54:F8:B1:9A:F0:5E:C6:56:2C:ED:57:88`) or with the same key as the Google apps that came on your tablet. Anything else is refused. Choose a plain `.apk`, not an XAPK bundle.
 
   The tablet's own Google apps are signed with a different Google key from the Play Store, so if Play Store won't sign in after installing, uninstall it from **Apps** and use **Aurora Store** instead.
 - **Off.** Press **Turn on Google Play**: it turns on Google Play Store, Google Play services and Google Services Framework, skipping any that are already on, and saves a backup first. Restart the tablet when it asks.
 - **On.** Nothing to do.
 
-The Star Education firmware isn't certified by Google, so Play Store may say **"This device isn't Play Protect certified"** or refuse to sign in. Boox Debloat never removes Google Play, Play Services or Google Services Framework, so this isn't caused by debloating. To fix it, register the tablet with Google:
+If the firmware isn't certified by Google, Play Store may say **"This device isn't Play Protect certified"** or refuse to sign in. Boox Debloat never removes Google Play, Play Services or Google Services Framework, so this isn't caused by debloating. To fix it, register the tablet with Google:
 
 1. Sign in to a Google account on the tablet (Settings, then Accounts), or at least open Play Store once.
 2. With the tablet connected and USB debugging on, get its Google Services Framework (GSF) ID:
