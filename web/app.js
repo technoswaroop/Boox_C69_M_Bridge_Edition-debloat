@@ -1033,22 +1033,31 @@ $("pictureForm").addEventListener("submit", async (e) => {
   const form = new FormData();
   form.append("picture", state.picture);
   form.append("fit", $("fit").checked ? "1" : "0");
+  const apply = $("applySleep").checked;
+  form.append("apply", apply ? "1" : "0");
   const btn = $("sendPicture");
   btn.disabled = true;
-  btn.textContent = "Sending…";
+  btn.textContent = apply ? "Setting… (about 30 s)" : "Sending…";
   state.busy = true;
   try {
     const res = await api("picture", { method: "POST", body: form });
     flash();
     const done = $("pictureDone");
-    done.textContent = `Sent as ${res.name}. On the tablet: open Storage, then Image (or Pictures), long-press the picture and set it as the screensaver.`;
+    const manual = "On the tablet: open Storage, then Image (or Pictures), long-press the picture, tap Set Screensaver, then Set as screensaver.";
+    if (apply && res.applied) {
+      done.textContent = `Done. ${res.name} is now the sleep picture. Press the power button to see it.`;
+    } else if (apply) {
+      done.textContent = `Sent as ${res.name}, but setting it didn't finish: ${res.applyError || "unknown error"}. ${manual}`;
+    } else {
+      done.textContent = `Sent as ${res.name}. ${manual}`;
+    }
     done.hidden = false;
   } catch (err) {
     setPictureInfo(err.message, true);
   } finally {
     state.busy = false;
     btn.disabled = false;
-    btn.textContent = "Send to tablet";
+    btn.textContent = "Set sleep picture";
   }
 });
 
