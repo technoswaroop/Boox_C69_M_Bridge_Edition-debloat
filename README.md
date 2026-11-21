@@ -2,7 +2,7 @@
 
 # Boox Debloat- C69 M Bridge Edition
 
-A small app for the **Onyx Boox C69 M Star** (Star Education edition). It removes the extra system apps, lets you bring any of them back with one switch, and keeps the sleep screen working.
+A small app for the **Onyx Boox M Bridge Edition** . It removes the extra system apps, lets you bring any of them back with one switch, and keeps the sleep screen working.
 
 It also installs apps from APK files, suggests e-ink friendly apps, and lets you browse, copy and delete files on the tablet.
 
@@ -274,4 +274,4 @@ Releases are built with [GoReleaser](https://goreleaser.com) when a `v*` tag is 
 
 MIT. Not affiliated with Onyx. Use at your own risk.
 
-Created by [tekki](https://www.tekki.studio). If it saved you some time, you can [buy me a coffee](https://buymeacoffee.com/tekki.studio).
+"Inspired by and based on the original by tekki" [tekki](https://www.tekki.studio). 
