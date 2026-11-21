@@ -1,6 +1,6 @@
 <img src="web/icon.svg" width="72" alt="">
 
-# Boox Debloat
+# Boox Debloat- C69 M Bridge Edition
 
 A small app for the **Onyx Boox C69 M Star** (Star Education edition). It removes the extra system apps, lets you bring any of them back with one switch, and keeps the sleep screen working.
 
